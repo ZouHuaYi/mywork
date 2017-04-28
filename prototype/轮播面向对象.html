@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.box input{
+				width:100px;
+			}
+			.box div{
+				width:200px;
+				height:200px;
+				border:1px solid red;
+				display: none;
+			}
+			.box .active{
+				background: green;
+			}
+			.box .show{
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="pox" class="box">
+			<input type="button" name="" id="" value="按钮一" class="active"/>
+			<input type="button" name="" id="" value="按钮二" />
+			<input type="button" name="" id="" value="按钮三" />
+			<div class="show">111111111</div>
+			<div >222222</div>
+			<div >3333333</div>
+		</div>
+		<div id="pox1" class="box">
+			<input type="button" name="" id="" value="按钮一" class="active"/>
+			<input type="button" name="" id="" value="按钮二" />
+			<input type="button" name="" id="" value="按钮三" />
+			<div class="show">111111111</div>
+			<div >222222</div>
+			<div >3333333</div>
+		</div>
+		<div id="btn">
+			<input type="button" name="" id="" value="按钮一自动切换" />
+			<input type="button" name="" id="" value="按钮二自动切换" />
+			<input type="button" name="" id="" value="按钮一自动停止" />
+			<input type="button" name="" id="" value="按钮二自动停止" />
+			<input type="button" name="" id="" value="按钮一取反" />
+			<input type="button" name="" id="" value="按钮二取反" />
+		</div>
+		
+		<script type="text/javascript">
+			
+			function Inint(id,onoff){
+//				var box = document.getElementById(id);
+//				var inp = box.getElementsByTagName('input');
+//				var divs = box.getElementsByTagName('div');
+//				var timer  =null;
+//				var nub = 0;
+				this.box = document.getElementById(id);
+				this.inp = this.box.getElementsByTagName('input');
+				this.divs = this.box.getElementsByTagName('div');
+				this.timer  =null;
+				this.nub = 0;
+				//onoff&&this.autoPlay();
+				
+				
+			}
+			Inint.prototype.dian = function(){
+				console.log(this)
+				var that = this;
+				for(var i=0;i<this.inp.length;i++){
+					this.inp[i].index = i;
+					this.inp[i].onclick = function(){
+						that.change(this.index);
+					}
+				}
+			}
+			Inint.prototype.change = function(num){
+				for(var i=0;i<this.inp.length;i++){
+					this.inp[i].className = '';
+					this.divs[i].className = '';
+				}
+				this.divs[num].className = "show";
+				this.inp[num].className = 'active';
+			}
+			
+			Inint.prototype.autoPlay=function(){
+				clearInterval(this.timer);
+				var that = this;
+				this.timer = setInterval(function(){
+					that.nub++;
+					that.nub = that.nub%that.inp.length;
+					that.change(that.nub);
+				},1000)	
+				console.log(this.timer);
+			}
+			
+			Inint.prototype.stop = function(){
+				clearInterval(this.timer);
+				this.timer = null;
+				console.log(this.timer);
+			}
+			
+			Inint.prototype.reverse = function(){
+				return !!this.timer;
+			}
+
+			var t = new Inint('pox');
+			var t1 = new Inint('pox1');
+			
+			var btn = document.getElementById('btn');
+			var btns = btn.getElementsByTagName('input');
+			
+			btns[0].onclick = function(){
+				t.autoPlay();
+			}
+			btns[1].onclick = function(){
+				t1.autoPlay();
+			}
+			
+			btns[2].onclick = function(){
+				t.stop();
+			}
+			btns[3].onclick = function(){
+				t1.stop();
+			}
+			btns[4].onclick = function(){
+				if(t.reverse()){
+					t.stop();
+				}else{
+					t.autoPlay();
+				}
+			}
+			btns[5].onclick = function(){
+				if(t1.reverse()){
+					t1.stop();
+				}else{
+					t1.autoPlay();
+				}
+			}
+//			t.dian();
+//			t1.dian();
+		</script>
+	</body>
+</html>

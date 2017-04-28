@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			div{
+				width:100px;
+				height:100px;
+				background: red;
+				position: absolute;
+				top:40%;
+				left:40%;
+			}
+			.box{
+				background: green;
+				left:0;
+				top:0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="div1" class="box">1</div>
+		<div id="div2">2</div>
+		<script type="text/javascript">
+			
+			var div1 = document.getElementById('div1');
+			var div2 = document.getElementById('div2')
+			
+			
+			div1.onmousedown = function(ev){
+				var disx = ev.pageX - div1.offsetLeft;
+				var disy = ev.pageY - div1.offsetTop;
+				
+				document.onmousemove = function(e){
+					div1.style.left = e.pageX - disx + 'px';
+					div1.style.top = e.pageY - disy + 'px';
+					
+					var obj = div2.getBoundingClientRect();
+					var obj1 = div1.getBoundingClientRect();
+					
+					var left = obj.left; // 红色
+					var top = obj.top;
+					var right = obj.right;
+					var bottom = obj.bottom;
+					
+					
+					var left1 = obj1.left; //绿色
+					var top1 = obj1.top;
+					var right1 = obj1.right;
+					var bottom1 = obj1.bottom;
+					
+					
+					if(right1>left&&bottom1>top&&right>left1&&bottom>top1){
+						div2.style.background ='blue';
+					}else{
+						div2.style.background ='red';
+					}
+					
+				}
+				
+				document.onmouseup = function(){
+					document.onmousemove = null;
+					document.onmouseup = null;
+				}
+				
+				ev.preventDefault();
+			}
+			
+			
+		</script>
+	</body>
+</html>

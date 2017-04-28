@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/*
+			 方法继承：类似继承
+			 	类似继承的步骤：
+			 		1.声明一个函数,这个函数是一个炮灰
+					2.让炮灰的原型等于父类的原型
+			 		3.实例化一下这个炮灰函数
+			 		4.把炮灰的实例赋给子类的原型
+			*/
+
+			function Fn(){};//父级的对象
+			Fn.prototype.run=function(name,age){
+				this.name=name;
+				this.age=age;
+				alert(this.age);
+				return this;
+			};
+
+			Fn.prototype.nu=function(){
+				alert(this.name)
+			};
+
+			function Pao(){};   //中间的过渡函数
+			Pao.prototype=Fn.prototype;   //两个原型相等
+
+			var p=new Pao();     //实例化后Pao的原型就有了上面的方法了
+
+			Copy.prototype=p;    //实例化后双方的原型就怒一样了啊。原型里面的原型关系不同了。
+			console.log(Copy.prototype== p.prototype)//是false这样证明是不同的这样的话地址指向就是不同了。
+			Copy.prototype.constructor=Copy;  //原型会覆盖的原因添加方法回去就行。原型等于一个对象的时候就会覆盖以前的函数方法也就是constructor添加回去。
+
+			console.log(Copy.prototype)
+            function Copy(){};
+
+			Copy.prototype.tt=function(name){
+				alert(this.name=name)
+				return this;
+			};
+
+			var c=new Copy();
+			var f=new Fn();
+
+//			console.log(c==p);
+//
+//			c.tt("oo").run("hrh",21);
+//			console.log(c);
+
+		</script>
+		
+	</body>
+</html>

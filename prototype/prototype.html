@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        button{
+            width: 100px;
+            height: 30px;
+        }
+        .box div{
+            width: 300px;
+            height: 300px;
+            border: 1px solid #00FF00;
+            display: none;
+        }
+        .box div.show{
+            display: block;
+        }
+        .bgk{
+            background: #00a8b2;
+        }
+    </style>
+</head>
+<body>
+<div id="box" class="box">
+    <button class="bgk">1</button>
+    <button id="00">2</button>
+    <button>3</button>
+    <div class="show">111</div>
+    <div>222</div>
+    <div>333</div>
+</div>
+<div id="box1" class="box">
+    <button class="bgk">1</button>
+    <button>2</button>
+    <button>3</button>
+    <div class="show">111</div>
+    <div>222</div>
+    <div>333</div>
+</div>
+</body>
+<script type="text/javascript">
+    function tab(id,onoff){
+        var oBox=document.getElementById(id);
+        var oDiv=oBox.getElementsByTagName('div');
+        var inp=oBox.getElementsByTagName('button');
+        var nub=0;
+        dian();
+        function dian(){
+            for(var i=0;i<inp.length;i++){
+                inp[i].index=i;
+                inp[i].onclick=function(){
+                    change(this.index)
+                }
+            }
+        }
+        function change(num){
+            for(var i=0;i<inp.length;i++){
+                inp[i].className = '';
+                oDiv[i].className = '';
+            }
+            oDiv[num].className = "show";
+            inp[num].className = 'bgk';
+        }
+        if(onoff){
+            autoaplay();
+        }
+        function autoaplay(){
+            timer = setInterval(function(){
+                nub++;
+                nub = nub%inp.length;
+                change(nub);
+            },1000)
+        }
+    }
+
+
+    function tabToggle(id){
+        this.oBox=document.getElementById(id);
+        this.oDiv=this.oBox.getElementsByTagName('div');
+        this.inp=this.oBox.getElementsByTagName('button');
+        this.nub=0;
+    }
+
+    tabToggle.prototype.dian=function(){
+      var that=this;
+        console.log(this.that)
+        for(var i=0;i<this.inp.length;i++){
+            this.inp[i].index=i;
+            this.inp[i].onclick=function(){
+                that.change(this.index)
+            }
+        }
+    }
+
+    tabToggle.prototype.change=function(num){
+        for(var i=0;i<this.inp.length;i++){
+            this.inp[i].className = '';
+            this.oDiv[i].className = '';
+        }
+        this.oDiv[num].className = "show";
+        this.inp[num].className = 'bgk';
+    }
+
+
+    var tt=new tabToggle('box')
+    tt.dian();
+    var ttt=new tabToggle('box1')
+    ttt.dian();
+//console.log(tt)
+
+
+</script>
+</html>
